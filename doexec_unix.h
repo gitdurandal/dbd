@@ -1,6 +1,6 @@
 /*
- * sbd - shadowinteger's backdoor
- * Copyright (C) 2004 Michel Blomgren <michel.blomgren@tigerteam.se>
+ * dbd - durandal's backdoor
+ * Copyright (C) 2012 Kyle Barnthouse <durandal@gitbrew.org>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -46,7 +46,7 @@ extern char highlight_prefix[];
 extern char highlight_suffix[];
 
 /*
-    this doexec() handles execution for sbd on Unix-like operating systems.
+    this doexec() handles execution for dbd on Unix-like operating systems.
     there are really 3 implementations: 1) if encryption is used, a parent
     process is handling encryption/decryption for the child, pipes are used
     for communication between the running program's process and the polling

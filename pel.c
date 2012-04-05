@@ -3,7 +3,8 @@
  * by Christophe Devine <devine@cr0.net>;
  * this program is licensed under the GPL.
  *
- * Ported to Win32 by Michel Blomgren <michel.blomgren@tigerteam.se> for sbd, June 2004
+ * Shamelessly ripped by Kyle Barnthouse <durandal@gitbrew.org> for dbd, April 2012
+ * Originally Ported to Win32 by Michel Blomgren <michel.blomgren@tigerteam.se> for sbd, June 2004
  *
  * WARNING!!!  The receiving buffer can _NOT_ be less than BUFSIZE (defined in
  * pel.h) otherwise a buffer overflow will occur! //Michel
