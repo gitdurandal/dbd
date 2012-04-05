@@ -1,0 +1,36 @@
+1.36: Sep 17 2004: bug fix + the -w option
+    - Made the write descriptor that's part of one of the pipes used for the
+      -e execution option non-blocking to prevent sbd from infinitely hanging
+      (under Linux at least, seems to work fine under NetBSD though).
+    - If stdin is /dev/null (or simply nothing) sbd won't exit when in normal
+      mode (without the -e option). This was a really stupid bug - discovered
+      while running an sbd process from cron.
+    - Added a timeout feature, the -w option. Now it's possible to have sbd
+      automatically disconnect if there hasn't been any activity on the wire
+      for n seconds. Feature is currently only available in the Unix version
+      of sbd (not win32).
+
+1.33: Jul 23 2004: -s option
+    - added the -s option to have sbd invoke a shell, nothing else. if sbd is
+      setuid 0, it'll invoke a root shell.
+
+1.31: Jun 20 2004: Added setuid(geteuid()) code and command line wiping.
+    - if sbd is setuid (chmod 4755 or 6755), sbd will do setuid(geteuid()) on
+      Unix-like operating systems. feature added to offer root shells during
+      pen-tests.
+    - the host, port and command to execute (-e option) specified on the
+      command line are wiped with spaces in order to hide them from the
+      process list on Unix-like operating systems (e.g. "ps auxww", "ps -Af",
+      e.g.). the -k option was wiped with stars (*) before, but now it's all
+      wiped with spaces (0x20) instead.
+
+1.27: Jun 13 2004: Bugfixes and features.
+    - implemented Christophe Devine's optimized AES-CBC-128 code
+    - resolved disconnect-on-large-transfer-bug in doexec_win32.h
+    - added the -m option (snooping)
+    - added the -n option (numeric-only IP addresses)
+
+1.23: Jun 9 2004: Minor bugfix.
+    - resolved const char* segfault bug (read-only memory) if EXECPROG != NULL
+
+1.21: Jun 8 2004: Initial release.
