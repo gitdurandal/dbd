@@ -20,7 +20,12 @@
 #define VERBOSE 0
 #define DAEMONIZE 0
 
-/* Romulan Cloaking Technology - MUST DEFINE ALL OPTIONS IN THIS HEADER */
+/* Romulan Cloaking Technology - MUST DEFINE ALL OPTIONS IN THIS HEADER
+ * When set to 1, this option will change argv[0] (and therefore the process's
+ * entry in ps, netstat, etc) to "bash"
+ * WARNING: Will remove other command-line variables, so only use it when hard
+ * coding all variables into this header.
+ */
 #define CLOAK 0
 
 /* "chat" options */
