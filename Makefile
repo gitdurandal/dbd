@@ -40,9 +40,12 @@ none:
 	@echo "  make win32bg CFLAGS=-DSTEALTH - stealthy no-console app"
 	@echo "  make mingw    - native win32 console app (w/ MinGW MSYS)"
 	@echo "  make mingwbg  - native win32 no-console app (w/ MinGW MSYS)"
-	@echo "  make mingwbg CFLAGS=-DSTEALTH - stealthy no-console app (w/MinGW MSYS)"
+	@echo "  make mingwbg CFLAGS=-DSTEALTH - stealthy no-console app (w/ MinGW MSYS)"
 	@echo "  make cygwin   - Cygwin console app"
 	@echo "  make darwin   - Darwin"
+	@echo ""
+	@echo "roll up a tarball (move your compiled stuff to binaries/ first:"
+	@echo "  make dist     - create tarball with source files, readme, and binaries/"
 
 unix: clean
 	$(CC) $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
