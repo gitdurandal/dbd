@@ -19,6 +19,7 @@ dbd is a Netcat-clone, designed to be portable and offer strong encryption. It r
 	$ make
 	usage:
 	  make unix     - Linux, NetBSD, FreeBSD, OpenBSD
+	  make unix32  - Linux, NetBSD, FreeBSD, OpenBSD 32-bit
 	  make sunos    - SunOS (Solaris)
 	  make win32    - native win32 console app (w/ Cygwin + MinGW)
 	  make win32bg  - create a native win32 no-console app (w/ Cygwin + MinGW)
