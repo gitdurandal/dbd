@@ -10,6 +10,7 @@ LDFLAGS=
 WIN_CFLAGS 	= -Wall -Wshadow -O2 -DWIN32
 WINMAIN_CFLAGS	= -mwindows -Wall -Wshadow -O2 -DWIN32 -DWINMAIN
 UNIX_CFLAGS	= -Wall -Wshadow -O2
+UNIX32_CFLAGS	= -Wall -Wshadow -O2 -m32 -march=i386
 
 # ldflags
 
@@ -52,7 +53,7 @@ unix: clean
 	$(CC) $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
 
 unix32: clean
-	$(CC) $(UNIX_CFLAGS) $(CFLAGS) -m32 -march=i386 -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
+	$(CC) $(UNIX32_CFLAGS) $(CFLAGS) -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
 
 
 sunos: clean
