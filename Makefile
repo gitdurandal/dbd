@@ -34,6 +34,7 @@ files = pel.c aes.c sha1.c doexec.c dbd.c
 none:
 	@echo "usage:"
 	@echo "  make unix     - Linux, NetBSD, FreeBSD, OpenBSD"
+	@echo "  make unix32   - Linux, NetBSD, FreeBSD, OpenBSD 32-bit"
 	@echo "  make sunos    - SunOS (Solaris)"
 	@echo "  make win32    - native win32 console app (w/ Cygwin + MinGW)"
 	@echo "  make win32bg  - create a native win32 no-console app (w/ Cygwin + MinGW)"
@@ -49,6 +50,10 @@ none:
 
 unix: clean
 	$(CC) $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
+
+unix32: clean
+	$(CC) $(UNIX_CFLAGS) $(CFLAGS) -m32 -march=i386 -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
+
 
 sunos: clean
 	@echo "*** tested on SunOS 5.9 x86 and r220 ***"
