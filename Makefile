@@ -45,6 +45,7 @@ none:
 	@echo "  make mingwbg CFLAGS=-DSTEALTH - stealthy no-console app (w/ MinGW MSYS)"
 	@echo "  make cygwin   - Cygwin console app"
 	@echo "  make darwin   - Darwin"
+	@echo "  make arm-cross   - Arm Cross Compile (arm-linux-gnueabi-gcc)"
 	@echo ""
 	@echo "roll up a tarball (move your compiled stuff to binaries/ first:"
 	@echo "  make dist     - create tarball with source files, readme, and binaries/"
@@ -79,6 +80,9 @@ mingwbg: cleanbg
 darwin: clean
 	$(CC) $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(LDFLAGS)
 	strip $(out)
+
+arm-cross: clean
+	arm-linux-gnueabi-gcc $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
 
 distclean: clean
 
