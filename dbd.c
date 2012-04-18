@@ -1,5 +1,5 @@
 /*
- * dbd - durandal's backdoor - $Revision: 1.00 $
+ * dbd - durandal's backdoor - $Revision: 1.20 $
  * Copyright (C) 2012 Kyle Barnthouse <durandal@gitbrew.org>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -51,7 +51,7 @@
     /* nop */
 #else
 static unsigned char rcsid[] =
-"$Id: dbd.c,v 1.00 2012/04/05 01:40:00 durandal Exp $";
+"$Id: dbd.c,v 1.20 2012/04/18 15:40:00 durandal Exp $";
 #endif
 
 
