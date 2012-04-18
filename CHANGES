@@ -1,2 +1,11 @@
+1.20: Apr 18 2012: Made a lot of changes to shift dbd from a primarily stand-
+  alone tool to one that can easily interoperate with any framework you throw
+  it into (works great with bindshell.it.cx/ohdae's Intersect post-exploitat-
+  ion framework.
+      -Makefile can now cross-compile windows binaries from a BackTrack or
+       similar development environment.
+      -Various and sundry insignificant changes designed to allow better
+       integration with other tools.
+
 1.00: Apr 5 2012: Shamelessly ripped from unmaintained sbd-1.37
       -Added Romulan Cloaking Technology for *nix

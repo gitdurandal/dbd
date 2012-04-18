@@ -1,0 +1,8 @@
+* Add Android-arm cross-compile support
+* Improve documentation
+* ???
+* PROFIT!
+
+All joking aside, once it's documented, easy for other tools to work with,
+and can easily build for most popular target environments focus will be
+shifted to creating tools that can utilize it.

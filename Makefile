@@ -1,6 +1,8 @@
 CC = gcc
 MAKE = make
 
+#mingw cross-compiler toolchain
+WCC = i586-mingw32msvc-gcc
 # extra flags
 CFLAGS=
 LDFLAGS=
@@ -46,11 +48,10 @@ none:
 	@echo "  make cygwin       - Cygwin console app"
 	@echo "  make darwin       - Darwin"
 	@echo ""
-	@echo "Cross-compile options:"
-#	@echo "  make arm-cross      - arm cross compile little endian (arm-linux-gnueabi-gcc)"
+	@echo "cross-compile options:"
 	@echo "  make mingw-cross    - win32 cross compile (i586-mingw32msvc-gcc)"
 	@echo "  make mingwbg-cross  - win32 no-console cross compile (i586-mingw32msvc-gcc)"
-	@echo "  make mingwbg CFLAGS=-DSTEALTH - stealthy win32 cross compile (i586-mingw32msvc-gcc)"
+	@echo "  make mingwbg-cross CFLAGS=-DSTEALTH - stealthy win32 cross compile"
 	@echo ""
 	@echo "roll up a tarball (move your compiled stuff to binaries/ first:"
 	@echo "  make dist         - create tarball with source files, readme, and binaries/"
@@ -86,16 +87,11 @@ darwin: clean
 	$(CC) $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(LDFLAGS)
 	strip $(out)
 
-#NOTE: Will be reworked later
-#arm-cross: clean
-#	ARCH=armv7
-#	arm-linux-gnueabi-gcc -mcpu=arm7tdmi -mno-thumb-interwork $(UNIX_CFLAGS) $(CFLAGS) -marm -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
-
 mingw-cross: clean
-	i586-mingw32msvc-gcc $(WIN_CFLAGS) $(CFLAGS) -o $(out).exe $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+	$(WCC) $(WIN_CFLAGS) $(CFLAGS) -o $(out).exe $(files) $(WIN_LDFLAGS) $(LDFLAGS)
 
 mingwbg-cross: cleanbg
-	i586-mingw32msvc-gcc $(WINMAIN_CFLAGS) $(CFLAGS) -o $(outbg).exe $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+	$(WCC) $(WINMAIN_CFLAGS) $(CFLAGS) -o $(outbg).exe $(files) $(WIN_LDFLAGS) $(LDFLAGS)
 
 distclean: clean
 
