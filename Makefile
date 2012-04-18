@@ -47,7 +47,7 @@ none:
 	@echo "  make darwin       - Darwin"
 	@echo ""
 	@echo "Cross-compile options:"
-	@echo "  make arm-cross      - arm cross compile (arm-linux-gnueabi-gcc)"
+#	@echo "  make arm-cross      - arm cross compile little endian (arm-linux-gnueabi-gcc)"
 	@echo "  make mingw-cross    - win32 cross compile (i586-mingw32msvc-gcc)"
 	@echo "  make mingwbg-cross  - win32 no-console cross compile (i586-mingw32msvc-gcc)"
 	@echo "  make mingwbg CFLAGS=-DSTEALTH - stealthy win32 cross compile (i586-mingw32msvc-gcc)"
@@ -86,8 +86,10 @@ darwin: clean
 	$(CC) $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(LDFLAGS)
 	strip $(out)
 
-arm-cross: clean
-	arm-linux-gnueabi-gcc $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
+#NOTE: Will be reworked later
+#arm-cross: clean
+#	ARCH=armv7
+#	arm-linux-gnueabi-gcc -mcpu=arm7tdmi -mno-thumb-interwork $(UNIX_CFLAGS) $(CFLAGS) -marm -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
 
 mingw-cross: clean
 	i586-mingw32msvc-gcc $(WIN_CFLAGS) $(CFLAGS) -o $(out).exe $(files) $(WIN_LDFLAGS) $(LDFLAGS)
