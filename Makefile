@@ -34,21 +34,26 @@ files = pel.c aes.c sha1.c doexec.c dbd.c
 
 none:
 	@echo "usage:"
-	@echo "  make unix     - Linux, NetBSD, FreeBSD, OpenBSD"
-	@echo "  make unix32   - Linux, NetBSD, FreeBSD, OpenBSD 32-bit"
-	@echo "  make sunos    - SunOS (Solaris)"
-	@echo "  make win32    - native win32 console app (w/ Cygwin + MinGW)"
-	@echo "  make win32bg  - create a native win32 no-console app (w/ Cygwin + MinGW)"
+	@echo "  make unix         - Linux, NetBSD, FreeBSD, OpenBSD"
+	@echo "  make unix32       - Linux, NetBSD, FreeBSD, OpenBSD 32-bit"
+	@echo "  make sunos        - SunOS (Solaris)"
+	@echo "  make win32        - native win32 console app (w/ Cygwin + MinGW)"
+	@echo "  make win32bg      - create a native win32 no-console app (w/ Cygwin + MinGW)"
 	@echo "  make win32bg CFLAGS=-DSTEALTH - stealthy no-console app"
-	@echo "  make mingw    - native win32 console app (w/ MinGW MSYS)"
-	@echo "  make mingwbg  - native win32 no-console app (w/ MinGW MSYS)"
+	@echo "  make mingw        - native win32 console app (w/ MinGW MSYS)"
+	@echo "  make mingwbg      - native win32 no-console app (w/ MinGW MSYS)"
 	@echo "  make mingwbg CFLAGS=-DSTEALTH - stealthy no-console app (w/ MinGW MSYS)"
-	@echo "  make cygwin   - Cygwin console app"
-	@echo "  make darwin   - Darwin"
-	@echo "  make arm-cross   - Arm Cross Compile (arm-linux-gnueabi-gcc)"
+	@echo "  make cygwin       - Cygwin console app"
+	@echo "  make darwin       - Darwin"
+	@echo ""
+	@echo "Cross-compile options:"
+	@echo "  make arm-cross      - arm cross compile (arm-linux-gnueabi-gcc)"
+	@echo "  make mingw-cross    - win32 cross compile (i586-mingw32msvc-gcc)"
+	@echo "  make mingwbg-cross  - win32 no-console cross compile (i586-mingw32msvc-gcc)"
+	@echo "  make mingwbg CFLAGS=-DSTEALTH - stealthy win32 cross compile (i586-mingw32msvc-gcc)"
 	@echo ""
 	@echo "roll up a tarball (move your compiled stuff to binaries/ first:"
-	@echo "  make dist     - create tarball with source files, readme, and binaries/"
+	@echo "  make dist         - create tarball with source files, readme, and binaries/"
 
 unix: clean
 	$(CC) $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
@@ -83,6 +88,12 @@ darwin: clean
 
 arm-cross: clean
 	arm-linux-gnueabi-gcc $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
+
+mingw-cross: clean
+	i586-mingw32msvc-gcc $(WIN_CFLAGS) $(CFLAGS) -o $(out) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+
+mingwbg-cross: cleanbg
+	i586-mingw32msvc-gcc $(WINMAIN_CFLAGS) $(CFLAGS) -o $(outbg) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
 
 distclean: clean
 
