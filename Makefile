@@ -90,10 +90,10 @@ arm-cross: clean
 	arm-linux-gnueabi-gcc $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
 
 mingw-cross: clean
-	i586-mingw32msvc-gcc $(WIN_CFLAGS) $(CFLAGS) -o $(out) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+	i586-mingw32msvc-gcc $(WIN_CFLAGS) $(CFLAGS) -o $(out).exe $(files) $(WIN_LDFLAGS) $(LDFLAGS)
 
 mingwbg-cross: cleanbg
-	i586-mingw32msvc-gcc $(WINMAIN_CFLAGS) $(CFLAGS) -o $(outbg) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+	i586-mingw32msvc-gcc $(WINMAIN_CFLAGS) $(CFLAGS) -o $(outbg).exe $(files) $(WIN_LDFLAGS) $(LDFLAGS)
 
 distclean: clean
 
