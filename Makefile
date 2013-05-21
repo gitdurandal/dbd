@@ -1,31 +1,35 @@
-CC = gcc
-MAKE = make
+CC	:= $(CROSS_COMPILE)gcc
+STRIP	:= $(CROSS_COMPILE)strip
+MAKE	:= make
 
+#mingw cross-compiler toolchain
+WCC	:= i586-mingw32msvc-gcc
 # extra flags
-CFLAGS=
-LDFLAGS=
+CFLAGS	+=
+LDFLAGS	+=
 
 # cflags
 
-WIN_CFLAGS 	= -Wall -Wshadow -O2 -DWIN32
-WINMAIN_CFLAGS	= -mwindows -Wall -Wshadow -O2 -DWIN32 -DWINMAIN
-UNIX_CFLAGS	= -Wall -Wshadow -O2
+WIN_CFLAGS 	+= -Wall -Wshadow -O2 -DWIN32
+WINMAIN_CFLAGS	+= -mwindows -Wall -Wshadow -O2 -DWIN32 -DWINMAIN
+UNIX_CFLAGS	+= -Wall -Wshadow -O2
+UNIX32_CFLAGS	+= -Wall -Wshadow -O2 -m32 -march=i386
 
 # ldflags
 
-WIN_LDFLAGS	= -s -lwsock32
-UNIX_LDFLAGS	= -s
-SUNOS_LDFLAGS	= -s -lresolv -lsocket -lnsl
+WIN_LDFLAGS	+= -s -lwsock32
+UNIX_LDFLAGS	+= -s
+SUNOS_LDFLAGS	+= -s -lresolv -lsocket -lnsl
 
 # make install (for unix-like only)
-INSTALL = install
-PREFIX = /usr/local
-BINDIR = bin
+INSTALL	:= install
+PREFIX	:= /usr/local
+BINDIR	:= bin
 
 #################################
 
-out = dbd
-outbg = dbdbg
+out := dbd
+outbg := dbdbg
 
 files = pel.c aes.c sha1.c doexec.c dbd.c
 
@@ -33,22 +37,33 @@ files = pel.c aes.c sha1.c doexec.c dbd.c
 
 none:
 	@echo "usage:"
-	@echo "  make unix     - Linux, NetBSD, FreeBSD, OpenBSD"
-	@echo "  make sunos    - SunOS (Solaris)"
-	@echo "  make win32    - native win32 console app (w/ Cygwin + MinGW)"
-	@echo "  make win32bg  - create a native win32 no-console app (w/ Cygwin + MinGW)"
+	@echo "  make unix         - Linux, NetBSD, FreeBSD, OpenBSD"
+	@echo "  make unix32       - Linux, NetBSD, FreeBSD, OpenBSD 32-bit"
+	@echo "  make sunos        - SunOS (Solaris)"
+	@echo "  make win32        - native win32 console app (w/ Cygwin + MinGW)"
+	@echo "  make win32bg      - create a native win32 no-console app (w/ Cygwin + MinGW)"
 	@echo "  make win32bg CFLAGS=-DSTEALTH - stealthy no-console app"
-	@echo "  make mingw    - native win32 console app (w/ MinGW MSYS)"
-	@echo "  make mingwbg  - native win32 no-console app (w/ MinGW MSYS)"
+	@echo "  make mingw        - native win32 console app (w/ MinGW MSYS)"
+	@echo "  make mingwbg      - native win32 no-console app (w/ MinGW MSYS)"
 	@echo "  make mingwbg CFLAGS=-DSTEALTH - stealthy no-console app (w/ MinGW MSYS)"
-	@echo "  make cygwin   - Cygwin console app"
-	@echo "  make darwin   - Darwin"
+	@echo "  make cygwin       - Cygwin console app"
+	@echo "  make darwin       - Darwin"
+	@echo ""
+	@echo "cross-compile options:"
+	@echo "  make mingw-cross    - win32 cross compile (i586-mingw32msvc-gcc)"
+	@echo "  make mingwbg-cross  - win32 no-console cross compile (i586-mingw32msvc-gcc)"
+	@echo "  make mingwbg-cross CFLAGS=-DSTEALTH - stealthy win32 cross compile"
+	@echo "  make unix CROSS_COMPILE=<"path/to/toolchain-"> - cross compile for any arch"
 	@echo ""
 	@echo "roll up a tarball (move your compiled stuff to binaries/ first:"
-	@echo "  make dist     - create tarball with source files, readme, and binaries/"
+	@echo "  make dist         - create tarball with source files, readme, and binaries/"
 
 unix: clean
 	$(CC) $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
+
+unix32: clean
+	$(CC) $(UNIX32_CFLAGS) $(CFLAGS) -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
+
 
 sunos: clean
 	@echo "*** tested on SunOS 5.9 x86 and r220 ***"
@@ -62,17 +77,24 @@ win32bg: cygmingwbg
 
 cygmingw: clean
 	$(CC) -mno-cygwin $(WIN_CFLAGS) $(CFLAGS) -o $(out) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+
 cygmingwbg: cleanbg
 	$(CC) -mno-cygwin $(WINMAIN_CFLAGS) $(CFLAGS) -o $(outbg) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
 
 mingw: clean
 	$(CC) $(WIN_CFLAGS) $(CFLAGS) -o $(out) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+
 mingwbg: cleanbg
 	$(CC) $(WINMAIN_CFLAGS) $(CFLAGS) -o $(outbg) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
 
 darwin: clean
 	$(CC) $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(LDFLAGS)
-	strip $(out)
+	STRIP $(out)
+mingw-cross: clean
+	$(WCC) $(WIN_CFLAGS) $(CFLAGS) -o $(out).exe $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+
+mingwbg-cross: cleanbg
+	$(WCC) $(WINMAIN_CFLAGS) $(CFLAGS) -o $(outbg).exe $(files) $(WIN_LDFLAGS) $(LDFLAGS)
 
 distclean: clean
 

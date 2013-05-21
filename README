@@ -6,7 +6,7 @@
 						  Y8888D' Y8888P' Y8888D'
 
 #[Durandal's Backdoor](http://gitbrew.org/dbd)
-##Copyright (C) 2012 Kyle Barnthouse [<durandal@gitbrew.org>](mailto:durandal@gitbrew.org)
+##Copyright (C) 2013 Kyle Barnthouse [<durandal@gitbrew.org>](mailto:durandal@gitbrew.org)
 ##dbd is distributed under the GNU GPL
 
 
@@ -19,6 +19,7 @@ dbd is a Netcat-clone, designed to be portable and offer strong encryption. It r
 	$ make
 	usage:
 	  make unix     - Linux, NetBSD, FreeBSD, OpenBSD
+	  make unix32  - Linux, NetBSD, FreeBSD, OpenBSD 32-bit
 	  make sunos    - SunOS (Solaris)
 	  make win32    - native win32 console app (w/ Cygwin + MinGW)
 	  make win32bg  - create a native win32 no-console app (w/ Cygwin + MinGW)
@@ -28,7 +29,13 @@ dbd is a Netcat-clone, designed to be portable and offer strong encryption. It r
 	  make mingwbg CFLAGS=-DSTEALTH - stealthy no-console app (w/ MinGW MSYS)
 	  make cygwin   - Cygwin console app
 	  make darwin   - Darwin
-
+	
+	cross-compile options:
+	  make mingw-cross    - win32 cross compile (i586-mingw32msvc-gcc)
+	  make mingwbg-cross  - win32 no-console cross compile (i586-mingw32msvc-gcc)
+	  make mingwbg-cross CFLAGS=-DSTEALTH - stealthy win32 cross compile
+	  make unix CROSS_COMPILE=<path/to/toolchain-> - cross compile for any arch
+	
 	roll up a tarball (move your compiled stuff to binaries/ first:
 	  make dist     - create tarball with source files, readme, and binaries/
 
@@ -146,8 +153,24 @@ Feel free to use this scrubber in anything you happen to be working on:
 ###WARNING
 
 Do not pass cached input (a file with commands or similar) to a listening "dbd -e" session. "dbd -e" is using pipes to pass data between the program being executed and dbd. Pipes are used (instead of plain pass-through duplicate file descriptors) because of encryption between the pipes and the socket. In order to prevent the writing end of one of the pipes from blocking the whole process, I turned it into a non-blocking descriptor. There is a chance that when passing too much input at a time through to the -e program, it will be truncated (cut off) since the pipe buffer (in the OS) can't hold all of the data. This problem can be solved by making dbd multi-threaded for instance, but I'll avoid this as long as possible for compatibility reasons.
-LICENSE  
----
+
+##CROSS-COMPILING
+
+Since dbd was designed to interoperate with other tools/frameworks, make now allows win32 cross compiling on Linux systems that have the mingw32-gcc toolchain.  These options are almost identical to their Windows-native counterpart with the addition of "-cross" after the chosen build.  Example:
+
+	$ make mingw-cross
+
+will do the same thing on a Linux system that
+
+	$ make mingw
+
+would do on a win32 system with mingw/msys installed on it.
+
+Right now all cross-compile options are built with BackTrack Linux in mind, but should work on any *nix with a little love.  If you have mingw32-gcc installed and make won't build, edit the WCC variable at the top of the Makefile and put the path to your mingw32-gcc binary.  
+
+The eventual goal is to have cross-compile options for arm/android and arm/ios as well.  This is currently doable, but I want to find a way to implement without requiring a 1GB+ android sdk/ndk/wtfk install.  
+
+##LICENSE  
 dbd Copyright (C) 2012 Kyle Barnthouse durandal@gitbrew.org
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
