@@ -51,7 +51,7 @@
     /* nop */
 #else
 static unsigned char rcsid[] =
-"$Id: dbd.c,v 1.20 2012/04/18 15:40:00 durandal Exp $";
+"$Id: dbd.c,v 1.50 2013/05/20 15:40:00 durandal Exp $";
 #endif
 
 
