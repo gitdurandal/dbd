@@ -1,6 +1,6 @@
 /*
  * dbd - durandal's backdoor
- * Copyright (C) 2012 Kyle Barnthouse <durandal@gitbrew.org>
+ * Copyright (C) 2013 Kyle Barnthouse <durandal@gitbrew.org>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free

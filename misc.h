@@ -1,6 +1,6 @@
 /*
  * dbd - durandal's backdoor
- * Copyright (C) 2012 Kyle Barnthouse <durandal@gitbrew.org>
+ * Copyright (C) 2013 Kyle Barnthouse <durandal@gitbrew.org>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -222,7 +222,7 @@ void message_box_usage(void) {
     char buf[2048];
 
     snprintf(buf, sizeof(buf),
-        "dbd %s Copyright (C) 2012 Kyle Barnthouse <durandal@gitbrew.org>\n"
+        "dbd %s Copyright (C) 2013 Kyle Barnthouse <durandal@gitbrew.org>\n"
         "\n"
         "connect (tcp):dbdbg.exe [-options] host port\n"
         "listen (tcp): dbdbg.exe -l -p port [-options]\n"
@@ -388,7 +388,7 @@ void forkmsgbox(char *msg, int length) {
  * print_banner() prints version and copyright info
  */
 void print_version(void) {
-    printf("dbd %s Copyright (C) 2012 Kyle Barnthouse <durandal@gitbrew.org>\n"
+    printf("dbd %s Copyright (C) 2013 Kyle Barnthouse <durandal@gitbrew.org>\n"
            "%s\n"
            "\n"
            "This program is free software; you can redistribute it and/or modify it under\n"

@@ -1,6 +1,6 @@
 /*
- * dbd - durandal's backdoor - $Revision: 1.20 $
- * Copyright (C) 2012 Kyle Barnthouse <durandal@gitbrew.org>
+ * dbd - durandal's backdoor - $Revision: 1.50 $
+ * Copyright (C) 2013 Kyle Barnthouse <durandal@gitbrew.org>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free

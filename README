@@ -6,7 +6,7 @@
 						  Y8888D' Y8888P' Y8888D'
 
 #[Durandal's Backdoor](http://gitbrew.org/dbd)
-##Copyright (C) 2012 Kyle Barnthouse [<durandal@gitbrew.org>](mailto:durandal@gitbrew.org)
+##Copyright (C) 2013 Kyle Barnthouse [<durandal@gitbrew.org>](mailto:durandal@gitbrew.org)
 ##dbd is distributed under the GNU GPL
 
 
@@ -34,6 +34,7 @@ dbd is a Netcat-clone, designed to be portable and offer strong encryption. It r
 	  make mingw-cross    - win32 cross compile (i586-mingw32msvc-gcc)
 	  make mingwbg-cross  - win32 no-console cross compile (i586-mingw32msvc-gcc)
 	  make mingwbg-cross CFLAGS=-DSTEALTH - stealthy win32 cross compile
+	  make unix CROSS_COMPILE=<path/to/toolchain-> - cross compile for any arch
 	
 	roll up a tarball (move your compiled stuff to binaries/ first:
 	  make dist     - create tarball with source files, readme, and binaries/

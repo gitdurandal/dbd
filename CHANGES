@@ -1,3 +1,5 @@
+1.50: May 20 2013: Finally made the Makefile crossbuild friendly.
+
 1.20: Apr 18 2012: Made a lot of changes to shift dbd from a primarily stand-
   alone tool to one that can easily interoperate with any framework you throw
   it into (works great with bindshell.it.cx/ohdae's Intersect post-exploitat-
