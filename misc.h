@@ -300,7 +300,7 @@ void verbox(void) {
     char buf1[1024];
     char buf2[16];
 
-    snprintf(buf1, sizeof(buf1), "dbd %s Copyright (C) 2012 Kyle Barnthouse <durandal@gitbrew.org>\n"
+    snprintf(buf1, sizeof(buf1), "dbd %s Copyright (C) 2013 Kyle Barnthouse <durandal@gitbrew.org>\n"
            "%s\n"
            "http://gitbrew.org\n"
            "dbd is distributed under the GNU General Public License v2",
