@@ -1,5 +1,5 @@
 /*
- * dbd - shadowinteger's backdoor
+ * dbd - durandal's backdoor
  * Copyright (C) 2013 Kyle Barnthouse <durandal@gitbrew.org>
  *
  * This program is free software; you can redistribute it and/or modify it
