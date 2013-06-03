@@ -1,19 +1,24 @@
+#CROSSPATH	:= $(CROSS)
 CC	:= $(CROSS_COMPILE)gcc
-STRIP	:= $(CROSS_COMPILE)strip
+STRIP	:= $(CROSS_COMPILE)strip --strip-all
 MAKE	:= make
 
-#mingw cross-compiler toolchain
-WCC	:= i586-mingw32msvc-gcc
+#mingw cross-compiler toolchains
+MCC	:= i586-mingw32msvc-gcc
+MSTRIP	:= i586-mingw32msvc-strip --strip-all
+WCC	:= i686-pc-mingw32-gcc
+WSTRIP	:= i686-pc-mingw32-strip --strip-all
+
 # extra flags
 CFLAGS	+=
 LDFLAGS	+=
 
 # cflags
 
-WIN_CFLAGS 	+= -Wall -Wshadow -O2 -DWIN32
-WINMAIN_CFLAGS	+= -mwindows -Wall -Wshadow -O2 -DWIN32 -DWINMAIN
-UNIX_CFLAGS	+= -Wall -Wshadow -O2
-UNIX32_CFLAGS	+= -Wall -Wshadow -O2 -m32 -march=i386
+WIN_CFLAGS 	+= -Wall -Wshadow -Os -DWIN32
+WINMAIN_CFLAGS	+= -mwindows -Wall -Wshadow -Os -DWIN32 -DWINMAIN
+UNIX_CFLAGS	+= -Wall -Wshadow -Os
+UNIX32_CFLAGS	+= -Wall -Wshadow -Os -m32 -march=i386
 
 # ldflags
 
@@ -64,7 +69,6 @@ unix: clean
 unix32: clean
 	$(CC) $(UNIX32_CFLAGS) $(CFLAGS) -o $(out) $(files) $(UNIX_LDFLAGS) $(LDFLAGS)
 
-
 sunos: clean
 	@echo "*** tested on SunOS 5.9 x86 and r220 ***"
 	$(CC) $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(SUNOS_LDFLAGS) $(LDFLAGS)
@@ -75,33 +79,40 @@ win32: cygmingw
 windows: cygmingw
 win32bg: cygmingwbg
 
+#cygmingw: CROSS_COMPILE	:= i686-pc-mingw32-
 cygmingw: clean
-	$(CC) -mno-cygwin $(WIN_CFLAGS) $(CFLAGS) -o $(out) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+	$(WCC) $(WIN_CFLAGS) $(CFLAGS) -o $(out) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+	$(WSTRIP) $(out)
 
-cygmingwbg: cleanbg
-	$(CC) -mno-cygwin $(WINMAIN_CFLAGS) $(CFLAGS) -o $(outbg) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+#cygmingwbg: override CROSS_COMPILE        := i686-pc-mingw32-
+cygmingwbg: clean
+	$(WCC) $(WINMAIN_CFLAGS) $(CFLAGS) -o $(outbg) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+	$(WSTRIP) $(outbg)
 
 mingw: clean
 	$(CC) $(WIN_CFLAGS) $(CFLAGS) -o $(out) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
 
-mingwbg: cleanbg
+mingwbg: clean
 	$(CC) $(WINMAIN_CFLAGS) $(CFLAGS) -o $(outbg) $(files) $(WIN_LDFLAGS) $(LDFLAGS)
 
 darwin: clean
 	$(CC) $(UNIX_CFLAGS) $(CFLAGS) -o $(out) $(files) $(LDFLAGS)
-	STRIP $(out)
-mingw-cross: clean
-	$(WCC) $(WIN_CFLAGS) $(CFLAGS) -o $(out).exe $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+	$(STRIP) $(out)
 
-mingwbg-cross: cleanbg
-	$(WCC) $(WINMAIN_CFLAGS) $(CFLAGS) -o $(outbg).exe $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+#mingw-cross: CROSS_COMPILE = i586-mingw32msvc-
+mingw-cross: clean
+	$(MCC) $(WIN_CFLAGS) $(CFLAGS) -o $(out).exe $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+	$(MSTRIP) $(out).exe
+
+#mingwbg-cross: override CROSS_COMPILE     := i586-mingw32msvc-
+mingwbg-cross: clean
+	$(MCC) $(WINMAIN_CFLAGS) $(CFLAGS) -o $(outbg).exe $(files) $(WIN_LDFLAGS) $(LDFLAGS)
+	$(MSTRIP) $(outbg).exe
 
 distclean: clean
 
 clean:
-	rm -f $(out) $(out).exe *.o core
-cleanbg:
-	rm -f $(outbg) $(outbg).exe *.o core
+	rm -f $(out) $(out).exe $(outbg) $(outbg).exe *.o core
 
 install:
 	$(INSTALL) -m 755 -d $(PREFIX)/$(BINDIR)
