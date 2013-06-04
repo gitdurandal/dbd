@@ -6,7 +6,7 @@
 						  Y8888D' Y8888P' Y8888D'
 
 #[Durandal's Backdoor](http://gitbrew.org/dbd)
-##Copyright (C) 2013 Kyle Barnthouse [<durandal@gitbrew.org>](mailto:durandal@gitbrew.org)
+##Copyright (C) 2013 Kyle Barnthouse [<kbarnthouse@hephaestussec.com>](mailto:kbarnthouse@hephaestussec.com)
 ##dbd is distributed under the GNU GPL
 
 
@@ -187,7 +187,7 @@ Some code (for doexec_win32.h) has been derived from doexec.c from the Win32 por
 
 The original version of Netcat was written by hobbit hobbit@avian.org. The NT version was done by Weld Pond weld@l0pht.com.
 ---
-Kyle Barnthouse [<durandal@gitbrew.org>](mailto:durandal@gitbrew.org)  
+Kyle Barnthouse [<kbarnthouse@hephaestussec.com>](mailto:kbarnthouse@hephaestussec.com)
 Security Consultant  
 [gitbrew.org](http://gitbrew.org)  
 [Hephaestus Security](http://hephaestussec.com)
