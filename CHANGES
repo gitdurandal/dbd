@@ -1,13 +1,172 @@
-1.50: May 20 2013: Finally made the Makefile crossbuild friendly.
+2013-06-08  Durandal <durandal@gitbrew.org>
 
-1.20: Apr 18 2012: Made a lot of changes to shift dbd from a primarily stand-
-  alone tool to one that can easily interoperate with any framework you throw
-  it into (works great with bindshell.it.cx/ohdae's Intersect post-exploitat-
-  ion framework.
-      -Makefile can now cross-compile windows binaries from a BackTrack or
-       similar development environment.
-      -Various and sundry insignificant changes designed to allow better
-       integration with other tools.
+	* .gitignore: added to .gitignore
 
-1.00: Apr 5 2012: Shamelessly ripped from unmaintained sbd-1.37
-      -Added Romulan Cloaking Technology for *nix
+2013-06-07  Durandal <durandal@gitbrew.org>
+
+	* : commit 0f886ac35926c3abfd7738b166b523371d66fe5e Author: Durandal
+	<durandal@gitbrew.org> Date:   Fri Jun 7 10:28:17 2013 -0400
+
+2013-06-04  Durandal <durandal@gitbrew.org>
+
+	* : Merge pull request #1 from gitbrew/master A smattering of minor changes
+
+2013-06-04  Durandal <durandal@gitbrew.org>
+
+	* : added arm binary statically cross compiled with dietlibc
+
+2013-06-03  Durandal <durandal@gitbrew.org>
+
+	* Makefile: ugly Makefile fix for better crossbuild support
+
+2013-06-03  Durandal <durandal@gitbrew.org>
+
+	* : added 32-bit linux dbd compiled statically with dietlibc
+
+2013-06-02  Durandal <durandal@gitbrew.org>
+
+	* .gitignore: added .gitignore
+
+2013-05-22  gitdurandal <durandal@gitbrew.org>
+
+	* : whoops...
+
+2013-05-22  gitdurandal <durandal@gitbrew.org>
+
+	* socket_code.h: fixed comment... finally
+
+2013-05-21  Durandal <durandal@gitbrew.org>
+
+	* : Merge pull request #4 from gitdurandal/master Added ppc64 static dbd binary
+
+2013-05-20  Durandal <durandal@gitbrew.org>
+
+	* : Merge pull request #3 from gitdurandal/master Finished updating binaries
+
+2013-05-21  Durandal <durandal@gitbrew.org>
+
+	* : updated linux and win32 binaries
+
+2013-05-20  gitdurandal <durandal@gitbrew.org>
+
+	* dbd.c, misc.h: Fixed version
+
+2013-05-20  Durandal <durandal@gitbrew.org>
+
+	* : Merge pull request #2 from gitdurandal/master Added binaries
+
+2013-05-20  Durandal <durandal@gitbrew.org>
+
+	* : added windows dbd binaries
+
+2013-05-20  Durandal <durandal@gitbrew.org>
+
+	* : Merge pull request #1 from gitdurandal/master Made dbd crossbuild compatible
+
+2013-05-20  gitdurandal <durandal@gitbrew.org>
+
+	* : made dbd crossbuild friendly
+
+2012-04-18  Durandal <durandal@gitbrew.org>
+
+	* : removed old binaries
+
+2012-04-18  Durandal <durandal@gitbrew.org>
+
+	* dbd.c: minor changes
+
+2012-04-18  Durandal <durandal@gitbrew.org>
+
+	* CHANGES, Makefile, README, TODO: 1.20 release
+
+2012-04-18  Durandal <durandal@gitbrew.org>
+
+	* Makefile: Will try to find nice way to cross build for android
+	without needing full sdk/ndk/wtfk
+
+2012-04-17  Durandal <durandal@gitbrew.org>
+
+	* Makefile: minor edit to mingw*-cross options
+
+2012-04-17  Durandal <durandal@gitbrew.org>
+
+	* Makefile: added win32 cross compile options
+
+2012-04-17  Durandal <durandal@gitbrew.org>
+
+	* Makefile: added arm-cross
+
+2012-04-11  Durandal <durandal@gitbrew.org>
+
+	* README: changed README
+
+2012-04-11  Durandal <durandal@gitbrew.org>
+
+	* README: updated readme
+
+2012-04-11  Durandal <durandal@gitbrew.org>
+
+	* Makefile: fixed Makefile Unix32
+
+2012-04-11  Durandal <durandal@gitbrew.org>
+
+	* Makefile: added 32-bit *nix option to Makefile
+
+2012-04-06  Durandal <durandal@gitbrew.org>
+
+	* : commit fe215d4795e408039531c62d26a0759a260205a7 Author:
+	U-DA\durandal <durandal@GIBSON.da.hephaestussec.com> Date:   Fri Apr
+	6 03:11:21 2012 -0400
+
+2012-04-06  Durandal <durandal@gitbrew.org>
+
+	* Makefile: added make dist
+
+2012-04-06  Durandal <durandal@gitbrew.org>
+
+	* Makefile: purtied it up
+
+2012-04-06  Durandal <durandal@gitbrew.org>
+
+	* Makefile: fixed
+
+2012-04-06  Durandal <durandal@gitbrew.org>
+
+	* Makefile: made Makefile more verbose
+
+2012-04-05  Durandal <durandal@gitbrew.org>
+
+	* socket_code.h: fixed preamble
+
+2012-04-05  Durandal <durandal@gitbrew.org>
+
+	* : added upx-packed win32 exes
+
+2012-04-05  Durandal <durandal@gitbrew.org>
+
+	* : added win32 stealth (no output) exe
+
+2012-04-05  Durandal <durandal@gitbrew.org>
+
+	* dbd.h: edited dbd.h
+
+2012-04-05  Durandal <durandal@gitbrew.org>
+
+	* doexec_unix.h, pel.c, readwrite.h: edited preambles
+
+2012-04-05  Durandal <durandal@gitbrew.org>
+
+	* CHANGES: edited CHANGES
+
+2012-04-05  Durandal <durandal@gitbrew.org>
+
+	* README: edited readme
+
+2012-04-05  Durandal <durandal@gitbrew.org>
+
+	* README: edited readme
+
+2012-04-05  Durandal <durandal@gitbrew.org>
+
+	* first commit
+
