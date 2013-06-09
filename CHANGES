@@ -1,3 +1,13 @@
+2013-06-08  Kyle Barnthouse <kbarnthouse@hephaestussec.com>
+
+	* : commit 916a8c96d379e26fdfe8aab59b4abf90152d89b1 Author: Kyle
+	Barnthouse <kbarnthouse@hephaestussec.com> Date:   Sat Jun 8
+	22:50:50 2013 -0400
+
+2013-06-08  gitdurandal <durandal@gitbrew.org>
+
+	* README: updated documentation and changelog
+
 2013-06-08  Durandal <durandal@gitbrew.org>
 
 	* .gitignore: added to .gitignore
