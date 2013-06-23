@@ -1,4 +1,3 @@
-
 1.5.0-QUACK / 2013-06-23 
 ========================
 
@@ -29,6 +28,7 @@
   * minor changes
 1.2.0 / 2012-04-18
 ==================
+
   * 1.2.0 release
   * Will try to find nice way to cross build for android without needing full sdk/ndk/wtfk
   * minor edit to mingw*-cross options
@@ -52,7 +52,7 @@
   * edited CHANGES
   * edited readme
   * edited readme
-1.2.0 / 2012-04-05
+1.0.0 / 2012-04-05
 ==================
 
   * first commit
